@@ -1,9 +1,15 @@
 package br.com.lucas.vrsoftwareApi.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
-
+@Data
 @Entity(name = "cars_images")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CarsImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
