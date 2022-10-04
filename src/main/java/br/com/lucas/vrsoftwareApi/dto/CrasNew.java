@@ -3,6 +3,7 @@ package br.com.lucas.vrsoftwareApi.dto;
 import br.com.lucas.vrsoftwareApi.model.Brand;
 import br.com.lucas.vrsoftwareApi.model.Category;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CrasNew {
     private Integer id;
     private String name;

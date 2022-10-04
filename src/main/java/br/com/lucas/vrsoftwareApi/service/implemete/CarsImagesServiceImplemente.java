@@ -47,7 +47,7 @@ public class CarsImagesServiceImplemente implements CarsImagesService {
 
 
             Cras cra = new Cras();
-            var carsImages = new  CarsImages(null,new Date(),cra,file);
+            var carsImages = new  CarsImages(null,new Date(),cra);
             return this.carsImagesRepository.save(carsImages);
 
 

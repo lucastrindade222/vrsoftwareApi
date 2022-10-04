@@ -1,7 +1,12 @@
 package br.com.lucas.vrsoftwareApi.service;
 
+import br.com.lucas.vrsoftwareApi.config.AplicationConfingTest;
+import br.com.lucas.vrsoftwareApi.dto.CrasNew;
 import br.com.lucas.vrsoftwareApi.model.Brand;
+import br.com.lucas.vrsoftwareApi.model.Category;
 import br.com.lucas.vrsoftwareApi.model.Cras;
+import br.com.lucas.vrsoftwareApi.repository.BrandRepository;
+import br.com.lucas.vrsoftwareApi.repository.CategoryRepository;
 import br.com.lucas.vrsoftwareApi.repository.CrasRepository;
 import br.com.lucas.vrsoftwareApi.service.exception.ObjectNotFoundException;
 import br.com.lucas.vrsoftwareApi.utils.UTILS;
@@ -13,14 +18,23 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Optional;
 
 @DisplayName("CrasServiceImplemete")
-public class CrasServiceTest {
+public class CrasServiceTest extends AplicationConfingTest {
     @Autowired
     public CrasService crasService;
     @MockBean
     public CrasRepository crasRepository;
+
+     @MockBean
+    public CategoryRepository categoryRepository;
+    @MockBean
+    public BrandRepository brandRepository;
+
+
 
 
     @Test
@@ -35,7 +49,7 @@ public class CrasServiceTest {
             this.crasService.find(13);
             Assertions.fail("Erro. Não foi gerado o erro ObjectNotFoundException.");
         }catch (ObjectNotFoundException err){
-            Assertions.assertEquals(err.getMessage(),"Marca não encontrada com o id:13");
+            Assertions.assertEquals(err.getMessage(),"Carros não encontrada com o id:13");
         }
 
 
@@ -60,9 +74,19 @@ public class CrasServiceTest {
 
     @Test
     public void saveTest(){
-        var cras = new Cras();
-        cras.setName("subaru");
 
+        var car = CrasNew.builder()
+                .daily_rate(new BigDecimal("710.00"))
+                .color("Red")
+                .available(true)
+                .name("F30")
+                .description( "Esportivo, clássico e voltado para o futuro: o lançamento do BMW F30 em 14 de outubro de 2011 na fábrica da BMW em Munique, revelou os caminhos inovadores que a Bayerische Motoren Werke explorou nesta sexta versão do BMW Série 3. A aparência marcante do BMW F30 se baseia na atual linha de")
+                .category(1)
+                .brand(1)
+                .license_plate("NAT-6399")
+                .build();
+
+         this.crasService.save(car);
 
 
     }
@@ -78,7 +102,7 @@ public class CrasServiceTest {
             this.crasService.delete(13);
             Assertions.fail("Erro. Não foi gerado o erro ObjectNotFoundException.");
         }catch (ObjectNotFoundException err){
-            Assertions.assertEquals(err.getMessage(),"Marca não encontrada com o id:13");
+            Assertions.assertEquals(err.getMessage(),"Carros não encontrada com o id:13");
         }
     }
 
@@ -88,8 +112,24 @@ public class CrasServiceTest {
     public void setup() {
         var brand = new Brand();
 
-        Mockito.when( this.brandRepository.findById(12)).thenReturn(Optional.of(brand));
-        Mockito.when( this.brandRepository.findById(13)).thenReturn(Optional.empty());
+        Mockito.when( this.brandRepository.findById(1)).thenReturn(Optional.of(brand));
+        String name = "sedã compacto";
+        String discretion = "O carro sedan é aquele em que a carroceria pode ser dividida em três partes, sendo a última delas a traseira, que tem um volume bem maior e mais projetada do que em outros modelos de veículos.";
+        var category = new Category(null,name,discretion,null,null);
+
+        Mockito.when( this.categoryRepository.findById(1)).thenReturn(Optional.of(category));
+
+        String description ="Esportivo, clássico e voltado para o futuro: o lançamento do BMW F30 em 14 de outubro de 2011 na fábrica da BMW em Munique, revelou os caminhos inovadores que a Bayerische Motoren Werke explorou nesta sexta versão do BMW Série 3. A aparência marcante do BMW F30 se baseia na atual linha de";
+        String license_plate="NAY-2083";
+        var daily_rate = new BigDecimal("800.00");
+        boolean available = true;
+        String color = "Red";
+
+        var car = new Cras(12,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
+
+        Mockito.when( this.crasRepository.findById(12)).thenReturn(Optional.of(car));
+        Mockito.when( this.crasRepository.findById(13)).thenReturn(Optional.empty());
+
 
     }
 }

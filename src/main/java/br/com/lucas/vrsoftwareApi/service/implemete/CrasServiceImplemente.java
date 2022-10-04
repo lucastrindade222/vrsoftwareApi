@@ -53,7 +53,7 @@ public class CrasServiceImplemente implements CrasService {
 
     @Override
     public Cras fromCrasNewToCras(CrasNew crasNew) {
-        Brand brand = this.brandService.find(crasNew.getId());
+        Brand brand = this.brandService.find(crasNew.getBrand());
         Category category = this.categoryService.find(crasNew.getCategory());
 
 

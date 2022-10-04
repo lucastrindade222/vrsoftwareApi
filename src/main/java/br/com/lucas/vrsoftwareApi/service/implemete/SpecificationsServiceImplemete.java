@@ -19,7 +19,7 @@ public class SpecificationsServiceImplemete implements SpecificationsService {
     @Override
     public Specifications find(Integer id) {
         Optional<Specifications> specifications = this.specificationsRepository.findById(id);
-        return specifications.orElseThrow(()-> new ObjectNotFoundException("Marca não encontrada com o id:"+id));
+        return specifications.orElseThrow(()-> new ObjectNotFoundException("Especificações não encontrada com o id:"+id));
     }
 
     @Override

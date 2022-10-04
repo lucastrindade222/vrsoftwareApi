@@ -1,6 +1,6 @@
 package br.com.lucas.vrsoftwareApi.service;
 
-import br.com.lucas.vrsoftwareApi.model.Brand;
+
 import br.com.lucas.vrsoftwareApi.model.Specifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

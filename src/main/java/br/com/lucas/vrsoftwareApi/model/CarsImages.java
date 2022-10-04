@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 @Data
-@Entity(name = "cars_images")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarsImages {
@@ -18,8 +18,8 @@ public class CarsImages {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
     private Cras car;
-    @Lob
-    @Column( columnDefinition="BLOB")
-    private byte[] image;
+//    @Lob
+//    @Column( columnDefinition="BLOB")
+//    private byte[] image;
 
 }
