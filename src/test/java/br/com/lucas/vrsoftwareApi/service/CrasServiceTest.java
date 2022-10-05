@@ -1,6 +1,7 @@
 package br.com.lucas.vrsoftwareApi.service;
 
 import br.com.lucas.vrsoftwareApi.config.AplicationConfingTest;
+import br.com.lucas.vrsoftwareApi.dto.CheckAvailability;
 import br.com.lucas.vrsoftwareApi.dto.CrasNew;
 import br.com.lucas.vrsoftwareApi.model.Brand;
 import br.com.lucas.vrsoftwareApi.model.Category;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -71,6 +74,11 @@ public class CrasServiceTest extends AplicationConfingTest {
 
 
     }
+    @Test
+    public void availableCars(){
+        CheckAvailability checkAvailability = new CheckAvailability(LocalDate.now(),10l);
+        this.crasService.availableCars(checkAvailability);
+    }
 
     @Test
     public void saveTest(){
@@ -78,7 +86,6 @@ public class CrasServiceTest extends AplicationConfingTest {
         var car = CrasNew.builder()
                 .daily_rate(new BigDecimal("710.00"))
                 .color("Red")
-                .available(true)
                 .name("F30")
                 .description( "Esportivo, clássico e voltado para o futuro: o lançamento do BMW F30 em 14 de outubro de 2011 na fábrica da BMW em Munique, revelou os caminhos inovadores que a Bayerische Motoren Werke explorou nesta sexta versão do BMW Série 3. A aparência marcante do BMW F30 se baseia na atual linha de")
                 .category(1)

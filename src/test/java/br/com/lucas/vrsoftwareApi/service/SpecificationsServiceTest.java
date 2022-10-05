@@ -46,6 +46,7 @@ public class SpecificationsServiceTest extends AplicationConfingTest {
         this.specificationsService.findAll();
 
     }
+
     @Test
     public void pagesTest(){
         Integer page = 0;

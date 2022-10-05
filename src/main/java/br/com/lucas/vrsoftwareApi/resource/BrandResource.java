@@ -28,12 +28,12 @@ private BrandService brandService;
 
     @GetMapping
     public  ResponseEntity<List<Brand>> findAll(){
-        var brandList = brandService.findAll();
+        var brandList = this.brandService.findAll();
         return  ResponseEntity.ok().body(brandList);
     }
     @GetMapping("/find")
     public  ResponseEntity<Brand> findById(@RequestParam(value = "id")  Integer id){
-        var brand = brandService.find(id);
+        var brand = this.brandService.find(id);
         return  ResponseEntity.ok().body(brand);
     }
     @GetMapping("/page")
@@ -44,18 +44,18 @@ private BrandService brandService;
             @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ){
         PageRequest pagesRequest = UTILS.now().pages(page, linesPerPage, orderBy, direction);
-        var brandPages = brandService.pages(pagesRequest);
+        var brandPages = this.brandService.pages(pagesRequest);
         return  ResponseEntity.ok().body(brandPages);
     }
     @PostMapping
     public ResponseEntity<Brand> save(@Validated @RequestBody BrandNew brandNew){
         var brand = this.modelMapper.map(brandNew,Brand.class);
-        brand = brandService.save(brand);
+        brand = this.brandService.save(brand);
         return ResponseEntity.status(HttpStatus.CREATED).body(brand);
     }
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestParam(value = "id")  Integer id){
-        brandService.delete(id);
+       this.brandService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

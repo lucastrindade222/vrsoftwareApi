@@ -5,6 +5,7 @@ import br.com.lucas.vrsoftwareApi.model.Cras;
 import br.com.lucas.vrsoftwareApi.repository.CarsImagesRepository;
 
 import br.com.lucas.vrsoftwareApi.service.CarsImagesService;
+import br.com.lucas.vrsoftwareApi.service.CrasService;
 import br.com.lucas.vrsoftwareApi.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class CarsImagesServiceImplemente implements CarsImagesService {
 
     @Autowired
     private CarsImagesRepository carsImagesRepository;
+    @Autowired
+    private CrasService crasService;
 
     @Override
     public CarsImages find(Integer id) {
@@ -46,8 +49,8 @@ public class CarsImagesServiceImplemente implements CarsImagesService {
 
 
 
-            Cras cra = new Cras();
-            var carsImages = new  CarsImages(null,new Date(),cra);
+            Cras cra = crasService.find(car_id);
+            var carsImages = new  CarsImages(null,new Date(),cra,file);
             return this.carsImagesRepository.save(carsImages);
 
 

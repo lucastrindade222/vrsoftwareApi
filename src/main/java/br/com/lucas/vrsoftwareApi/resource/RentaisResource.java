@@ -1,8 +1,11 @@
 package br.com.lucas.vrsoftwareApi.resource;
 
-import br.com.lucas.vrsoftwareApi.dto.CostumersNew;
-import br.com.lucas.vrsoftwareApi.model.Costumers;
-import br.com.lucas.vrsoftwareApi.service.CostumersService;
+import br.com.lucas.vrsoftwareApi.dto.BrandNew;
+import br.com.lucas.vrsoftwareApi.dto.CheckAvailability;
+import br.com.lucas.vrsoftwareApi.dto.RentaisNew;
+import br.com.lucas.vrsoftwareApi.model.Brand;
+import br.com.lucas.vrsoftwareApi.model.Rentais;
+import br.com.lucas.vrsoftwareApi.service.RentaisService;
 import br.com.lucas.vrsoftwareApi.utils.UTILS;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,48 +19,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("costumers")
+@RequestMapping("rentais")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class CostumersResource {
+public class RentaisResource {
 
     @Autowired
-    private CostumersService costumersService;
+    private RentaisService rentaisService;
     @Autowired
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<Costumers>> findAll(){
-        var costumersList = this.costumersService.findAll();
-        return  ResponseEntity.ok().body(costumersList);
+    public ResponseEntity<List<Rentais>> findAll(){
+        var brandList = this.rentaisService.findAll();
+        return  ResponseEntity.ok().body(brandList);
     }
     @GetMapping("/find")
-    public  ResponseEntity<Costumers> findById(@RequestParam(value = "id")  Integer id){
-        var costumers = this.costumersService.find(id);
-        return  ResponseEntity.ok().body(costumers);
+    public  ResponseEntity<Rentais> findById(@RequestParam(value = "id")  Integer id){
+        var brand = this.rentaisService.find(id);
+        return  ResponseEntity.ok().body(brand);
     }
     @GetMapping("/page")
-    public  ResponseEntity<Page<Costumers>> findPage(
+    public  ResponseEntity<Page<Rentais>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ){
         PageRequest pagesRequest = UTILS.now().pages(page, linesPerPage, orderBy, direction);
-        var costumersPage = this.costumersService.pages(pagesRequest);
-        return  ResponseEntity.ok().body(costumersPage);
+        var brandPages = this.rentaisService.pages(pagesRequest);
+        return  ResponseEntity.ok().body(brandPages);
     }
     @PostMapping
-    public ResponseEntity<Costumers> save(@Validated @RequestBody CostumersNew costumersNew){
-        var costumers = this.modelMapper.map(costumersNew, Costumers.class);
-        costumers = this.costumersService.save(costumers);
-        return ResponseEntity.status(HttpStatus.CREATED).body(costumers);
-    }
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestParam(value = "id")  Integer id){
-        this.costumersService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Rentais> save(@Validated @RequestBody RentaisNew rentaisNew){
+        var  rentais = this.rentaisService.save(rentaisNew);
+        return ResponseEntity.status(HttpStatus.CREATED).body(rentais);
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestParam(value = "id")  Integer id){
+        this.rentaisService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

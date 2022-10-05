@@ -1,5 +1,6 @@
 package br.com.lucas.vrsoftwareApi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,9 @@ public class CarsImages {
     private Date created_at;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
+    @JsonIgnore
     private Cras car;
-//    @Lob
-//    @Column( columnDefinition="BLOB")
-//    private byte[] image;
+    @Lob
+    private byte[] image;
 
 }

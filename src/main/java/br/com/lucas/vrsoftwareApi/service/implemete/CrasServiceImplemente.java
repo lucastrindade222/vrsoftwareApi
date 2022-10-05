@@ -1,5 +1,6 @@
 package br.com.lucas.vrsoftwareApi.service.implemete;
 
+import br.com.lucas.vrsoftwareApi.dto.CheckAvailability;
 import br.com.lucas.vrsoftwareApi.dto.CrasNew;
 import br.com.lucas.vrsoftwareApi.model.Brand;
 import br.com.lucas.vrsoftwareApi.model.Category;
@@ -8,12 +9,14 @@ import br.com.lucas.vrsoftwareApi.repository.CrasRepository;
 import br.com.lucas.vrsoftwareApi.service.BrandService;
 import br.com.lucas.vrsoftwareApi.service.CategoryService;
 import br.com.lucas.vrsoftwareApi.service.CrasService;
+import br.com.lucas.vrsoftwareApi.service.RentaisService;
 import br.com.lucas.vrsoftwareApi.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,7 @@ public class CrasServiceImplemente implements CrasService {
     public CategoryService categoryService;
     @Autowired
     public BrandService brandService;
+
 
     @Override
     public Cras find(Integer id) {
@@ -44,6 +48,26 @@ public class CrasServiceImplemente implements CrasService {
         return this.crasRepository.findAll(pageRequest);
 
     }
+
+
+
+    @Override
+    public List<Cras> availableCars(CheckAvailability checkAvailability) {
+
+    var start = checkAvailability.getStart_date().atStartOfDay();
+    var plusDays = checkAvailability.getNumberOfDaysRentals();
+    var end =checkAvailability.getStart_date().atStartOfDay().plusDays(plusDays);
+
+    return this.crasRepository.availableCars(start,end);
+    }
+
+    @Override
+    public BigDecimal consultTotalValue(Integer car_id,Long days) {
+       var cra = this.find(car_id);
+       var total =   cra.getDaily_rate().multiply(new BigDecimal(days));
+       return total;
+    }
+
 
     @Override
     public Cras save(CrasNew crasNew) {

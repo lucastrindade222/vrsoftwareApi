@@ -1,14 +1,16 @@
 package br.com.lucas.vrsoftwareApi.dto;
 
-import br.com.lucas.vrsoftwareApi.model.Costumers;
-import br.com.lucas.vrsoftwareApi.model.Cras;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +19,9 @@ public class RentaisNew {
 
     private Integer cras;
     private Integer costumer;
-    private LocalDateTime start_date;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate start_date;
     private long numberOfDaysRentals;
-    private Integer total;
-    private Date created_at;
-    private Date update_at;
+
+
 }

@@ -1,9 +1,7 @@
 package br.com.lucas.vrsoftwareApi.resource;
 
 import br.com.lucas.vrsoftwareApi.config.AplicationConfingTest;
-import br.com.lucas.vrsoftwareApi.dto.CategoryNew;
 import br.com.lucas.vrsoftwareApi.dto.SpecificationsNew;
-import br.com.lucas.vrsoftwareApi.model.Category;
 import br.com.lucas.vrsoftwareApi.model.Specifications;
 import br.com.lucas.vrsoftwareApi.repository.SpecificationsRepository;
 import br.com.lucas.vrsoftwareApi.service.SpecificationsService;
@@ -12,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -37,6 +36,8 @@ public class SpecificationsResourceTest  extends AplicationConfingTest {
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private ModelMapper modelMapper;
     @Test
     public void findAllTest() throws Exception {
 

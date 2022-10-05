@@ -1,13 +1,9 @@
 package br.com.lucas.vrsoftwareApi.resource;
 
 import br.com.lucas.vrsoftwareApi.config.AplicationConfingTest;
-import br.com.lucas.vrsoftwareApi.dto.BrandNew;
 import br.com.lucas.vrsoftwareApi.dto.CategoryNew;
-import br.com.lucas.vrsoftwareApi.model.Brand;
 import br.com.lucas.vrsoftwareApi.model.Category;
-import br.com.lucas.vrsoftwareApi.repository.BrandRepository;
 import br.com.lucas.vrsoftwareApi.repository.CategoryRepository;
-import br.com.lucas.vrsoftwareApi.service.BrandService;
 import br.com.lucas.vrsoftwareApi.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

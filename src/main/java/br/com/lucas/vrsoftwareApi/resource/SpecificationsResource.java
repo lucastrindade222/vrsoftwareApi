@@ -30,7 +30,7 @@ public class SpecificationsResource {
 
     @GetMapping
     public ResponseEntity<List<SpecificationsFindAll>> findAll(){
-        var specificationsList = specificationsService.findAll();
+        var specificationsList = this.specificationsService.findAll();
 
         List<SpecificationsFindAll> specificationsFindAlls = specificationsList
                 .stream()
@@ -41,11 +41,11 @@ public class SpecificationsResource {
     }
     @GetMapping("/find")
     public  ResponseEntity<Specifications> findById(@RequestParam(value = "id")  Integer id){
-        var specifications = specificationsService.find(id);
+        var specifications = this.specificationsService.find(id);
         return  ResponseEntity.ok().body(specifications);
     }
     @GetMapping("/page")
-    public  ResponseEntity<Page<SpecificationsFindAll>> findPage(
+    public  ResponseEntity<Page<Specifications>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
@@ -53,21 +53,20 @@ public class SpecificationsResource {
     ){
         PageRequest pagesRequest = UTILS.now().pages(page, linesPerPage, orderBy, direction);
 
-        var specificationsPage = specificationsService.pages(pagesRequest);
-        Page<SpecificationsFindAll> specificationsFindAlls = specificationsPage
-                .map(obj -> this.modelMapper.map(obj,SpecificationsFindAll.class));
+        var specificationsPage = this.specificationsService.pages(pagesRequest);
 
-        return  ResponseEntity.ok().body(specificationsFindAlls);
+
+        return  ResponseEntity.ok().body(specificationsPage);
     }
     @PostMapping
     public ResponseEntity<Specifications> save(@Validated @RequestBody SpecificationsNew specificationsNew){
         var specifications = this.modelMapper.map(specificationsNew,Specifications.class);
-        specifications = specificationsService.save(specifications);
+        specifications = this.specificationsService.save(specifications);
         return ResponseEntity.status(HttpStatus.CREATED).body(specifications);
     }
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestParam(value = "id")  Integer id){
-        specificationsService.delete(id);
+        this.specificationsService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -3,7 +3,9 @@ package br.com.lucas.vrsoftwareApi.service;
 import br.com.lucas.vrsoftwareApi.config.AplicationConfingTest;
 
 import br.com.lucas.vrsoftwareApi.model.CarsImages;
+import br.com.lucas.vrsoftwareApi.model.Cras;
 import br.com.lucas.vrsoftwareApi.repository.CarsImagesRepository;
+import br.com.lucas.vrsoftwareApi.repository.CrasRepository;
 import br.com.lucas.vrsoftwareApi.service.exception.ObjectNotFoundException;
 import br.com.lucas.vrsoftwareApi.utils.UTILS;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +31,8 @@ public class CarsImagesServiceTest extends AplicationConfingTest {
     public CarsImagesService carsImagesService;
     @MockBean
     public CarsImagesRepository carsImagesRepository;
+    @MockBean
+    public CrasRepository crasRepository;
 
     @Test
     public void findTest(){
@@ -69,7 +73,7 @@ public class CarsImagesServiceTest extends AplicationConfingTest {
 
         try {
             FileInputStream file = new FileInputStream("img/Hobbit.jpg");
-            this.carsImagesService.save(12,file.readAllBytes());
+            this.carsImagesService.save(10,file.readAllBytes());
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -101,5 +105,8 @@ public class CarsImagesServiceTest extends AplicationConfingTest {
         Mockito.when( this.carsImagesRepository.findById(12)).thenReturn(Optional.of(carsImages));
         Mockito.when( this.carsImagesRepository.findById(13)).thenReturn(Optional.empty());
 
+        var cra = new Cras();
+
+        Mockito.when( this.crasRepository.findById(10)).thenReturn(Optional.of(cra));
     }
 }

@@ -27,12 +27,12 @@ public class CategoryResource {
 
     @GetMapping
     public ResponseEntity<List<Category>> findAll(){
-        var categoryList = categoryService.findAll();
+        var categoryList = this.categoryService.findAll();
         return  ResponseEntity.ok().body(categoryList);
     }
     @GetMapping("/find")
     public  ResponseEntity<Category> findById(@RequestParam(value = "id")  Integer id){
-        var category = categoryService.find(id);
+        var category = this.categoryService.find(id);
         return  ResponseEntity.ok().body(category);
     }
     @GetMapping("/page")
@@ -43,18 +43,18 @@ public class CategoryResource {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ){
         PageRequest pagesRequest = UTILS.now().pages(page, linesPerPage, orderBy, direction);
-        var categoryPages = categoryService.pages(pagesRequest);
+        var categoryPages = this.categoryService.pages(pagesRequest);
         return  ResponseEntity.ok().body(categoryPages);
     }
     @PostMapping
     public ResponseEntity<Category> save(@Validated @RequestBody CategoryNew categoryNew){
         var category = this.modelMapper.map(categoryNew,Category.class);
-        category = categoryService.save(category);
+        category = this.categoryService.save(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestParam(value = "id")  Integer id){
-        categoryService.delete(id);
+        this.categoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

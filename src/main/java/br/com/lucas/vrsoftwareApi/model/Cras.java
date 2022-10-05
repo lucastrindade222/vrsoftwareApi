@@ -35,6 +35,7 @@ public class Cras {
   private Category category;
   private String color;
   private Date created_at;
+  @JsonIgnore
   @OneToMany(mappedBy = "cras", fetch = FetchType.LAZY )
   private List<Rentais> rentais;
 
