@@ -76,7 +76,7 @@ public class CrasServiceTest extends AplicationConfingTest {
     }
     @Test
     public void availableCars(){
-        CheckAvailability checkAvailability = new CheckAvailability(LocalDate.now(),10l);
+        CheckAvailability checkAvailability = new CheckAvailability(LocalDate.now(),10l,null);
         this.crasService.availableCars(checkAvailability);
     }
 
@@ -132,7 +132,7 @@ public class CrasServiceTest extends AplicationConfingTest {
         boolean available = true;
         String color = "Red";
 
-        var car = new Cras(12,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
+        var car = new Cras(12,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null,null);
 
         Mockito.when( this.crasRepository.findById(12)).thenReturn(Optional.of(car));
         Mockito.when( this.crasRepository.findById(13)).thenReturn(Optional.empty());

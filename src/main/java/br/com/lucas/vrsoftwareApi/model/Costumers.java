@@ -1,6 +1,7 @@
 package br.com.lucas.vrsoftwareApi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Costumers {
     private Date created_at;
     private Date update_at;
     @OneToMany(mappedBy = "costumer", fetch = FetchType.LAZY )
+    @JsonIgnore
     List<Rentais> rentais;
 
 }

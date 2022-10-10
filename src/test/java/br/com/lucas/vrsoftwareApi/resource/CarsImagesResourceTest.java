@@ -129,8 +129,8 @@ public class CarsImagesResourceTest extends AplicationConfingTest {
         boolean available = true;
         String color = "Red";
 
-        var car1 = new Cras(1,"F30",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
-        var car2 = new Cras(2,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
+        var car1 = new Cras(1,"F30",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null,null);
+        var car2 = new Cras(2,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null,null);
 
 
         MockMultipartFile file

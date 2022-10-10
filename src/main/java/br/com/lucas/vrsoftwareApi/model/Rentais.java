@@ -21,11 +21,9 @@ public class Rentais {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @JsonIgnore
     @JoinColumn(name = "car_id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Cras cras;
-    @JsonIgnore
     @JoinColumn(name = "costumer_id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Costumers costumer;

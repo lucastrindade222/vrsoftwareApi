@@ -50,9 +50,17 @@ public class CarsImagesServiceImplemente implements CarsImagesService {
 
 
             Cras cra = crasService.find(car_id);
-            var carsImages = new  CarsImages(null,new Date(),cra,file);
-            return this.carsImagesRepository.save(carsImages);
 
+           CarsImages carsImagesIs = this.carsImagesRepository.findByCar(cra);
+           if(carsImagesIs != null){
+               carsImagesIs.setImage(file);
+               return  this.carsImagesRepository.save(carsImagesIs);
+           }
+
+        System.out.println("não achou");
+        var carsImages = new  CarsImages(null,new Date(),cra,file);
+
+        return  this.carsImagesRepository.save(carsImages);
 
     }
 

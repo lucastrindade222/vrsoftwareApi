@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface CrasRepository extends JpaRepository<Cras,Integer>, PagingAndSortingRepository<Cras,Integer> {
 
-    @Query(value =  "select * from cras c where c.id not in(\n" +
-            "select  rent.car_id  FROM rentais rent where \n" +
-            " (rent.start_date >= ?1 and rent .start_date <= ?1  ) or (rent.start_date >= ?2 and rent .start_date <= ?2))", nativeQuery = true)
+    @Query(value =  "select * from cras c where c.id not in(select  rent.car_id FROM rentais rent WHERE (rent.start_date between ?1 and ?2 ) or (rent.end_date between ?1 and ?2 ) )", nativeQuery = true)
     List<Cras> availableCars(LocalDateTime start_date, LocalDateTime end_date);
 }

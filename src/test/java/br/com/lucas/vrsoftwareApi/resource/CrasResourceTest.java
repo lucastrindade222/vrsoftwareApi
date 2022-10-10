@@ -91,7 +91,7 @@ public class CrasResourceTest extends AplicationConfingTest {
     }
     @Test
     public void availableCars()throws Exception {
-        CheckAvailability checkAvailability = new CheckAvailability(LocalDate.now(),10l);
+        CheckAvailability checkAvailability = new CheckAvailability(LocalDate.now(),10l,null);
 
         ResultActions response=  mockMvc.perform(post("/cras/check")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -160,8 +160,8 @@ public class CrasResourceTest extends AplicationConfingTest {
         boolean available = true;
         String color = "Red";
 
-        var car1 = new Cras(1,"F30",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
-        var car2 = new Cras(2,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null);
+        var car1 = new Cras(1,"F30",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null,null);
+        var car2 = new Cras(2,"F34",description,daily_rate,available,license_plate,brand,category,color,new Date(),null,null,null);
 
         Mockito.when( this.crasRepository.findById(1)).thenReturn(Optional.of(car1));
         Mockito.when( this.crasRepository.findAll()).thenReturn(Arrays.asList(car1,car2));

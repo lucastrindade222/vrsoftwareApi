@@ -45,6 +45,9 @@ public class Cras {
           joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"),
           inverseJoinColumns = @JoinColumn(name = "specification_id", referencedColumnName = "id"))
   private Set<Specifications> specifications;
+  @OneToOne(mappedBy = "car")
+  @JoinColumn(name = "image")
+  private CarsImages carsImages;
 
 
 

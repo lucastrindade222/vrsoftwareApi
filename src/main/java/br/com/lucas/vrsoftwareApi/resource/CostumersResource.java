@@ -1,6 +1,7 @@
 package br.com.lucas.vrsoftwareApi.resource;
 
 import br.com.lucas.vrsoftwareApi.dto.CostumersNew;
+import br.com.lucas.vrsoftwareApi.dto.CostumersUpDate;
 import br.com.lucas.vrsoftwareApi.model.Costumers;
 import br.com.lucas.vrsoftwareApi.service.CostumersService;
 import br.com.lucas.vrsoftwareApi.utils.UTILS;
@@ -50,6 +51,12 @@ public class CostumersResource {
     public ResponseEntity<Costumers> save(@Validated @RequestBody CostumersNew costumersNew){
         var costumers = this.modelMapper.map(costumersNew, Costumers.class);
         costumers = this.costumersService.save(costumers);
+        return ResponseEntity.status(HttpStatus.CREATED).body(costumers);
+    }
+    @PutMapping
+    public ResponseEntity<Costumers> Update(@Validated @RequestBody CostumersUpDate costumersUpDate){
+
+        var  costumers = this.costumersService.upData(costumersUpDate);
         return ResponseEntity.status(HttpStatus.CREATED).body(costumers);
     }
     @DeleteMapping

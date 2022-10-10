@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +14,6 @@ public class CheckAvailability {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate start_date;
     private Long numberOfDaysRentals;
+    private Integer  id;
 
 }

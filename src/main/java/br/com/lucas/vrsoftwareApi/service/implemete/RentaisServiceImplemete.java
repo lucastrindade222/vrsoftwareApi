@@ -1,6 +1,7 @@
 package br.com.lucas.vrsoftwareApi.service.implemete;
 
 
+import br.com.lucas.vrsoftwareApi.dto.CheckAvailability;
 import br.com.lucas.vrsoftwareApi.dto.RentaisNew;
 import br.com.lucas.vrsoftwareApi.model.Costumers;
 import br.com.lucas.vrsoftwareApi.model.Cras;
@@ -39,6 +40,13 @@ public class RentaisServiceImplemete implements RentaisService {
     }
 
     @Override
+    public boolean checkById(Integer id) {
+       var rentais = this.find(id);
+
+       return LocalDateTime.now().isBefore( rentais.getStart_date());
+    }
+
+    @Override
     public List<Rentais> findAll() {
         return  this.rentaisRepository.findAll();
     }
@@ -55,6 +63,13 @@ public class RentaisServiceImplemete implements RentaisService {
     }
     @Override
     public Rentais fromRentaisNewToRentais(RentaisNew rentaisNew){
+
+        var list= this.rentaisRepository.checkAvailability(rentaisNew.getStart_date().atStartOfDay(),(rentaisNew.getStart_date().atStartOfDay().plusDays(rentaisNew.getNumberOfDaysRentals())),rentaisNew.getCras());
+        System.out.println(list.size());
+        if(list.size()>0){
+            throw new DataIntegrityException("Conflito de Datas.");
+        }
+
         Costumers costumer = this.costumersService.find(rentaisNew.getCostumer());
         Cras cras = this.crasService.find(rentaisNew.getCras());
         BigDecimal total = this.calculateTotal(cras.getDaily_rate(),rentaisNew.getNumberOfDaysRentals());
@@ -82,18 +97,28 @@ public class RentaisServiceImplemete implements RentaisService {
       LocalDateTime newEnd = rentais.getEnd_date().plusDays(plus_days);
       BigDecimal calculatedTotal = this.calculateTotal(rentais.getCras().getDaily_rate(),plus_days);
       BigDecimal newTotal = calculatedTotal.add(rentais.getTotal());
-      this.checkAvailabilityNoId(rentais.getStart_date(),newEnd,rentai_id);
+      this.checkAvailabilityNoId(rentais.getStart_date(),newEnd,rentai_id,rentais.getCras().getId());
       rentais.setTotal(newTotal);
-
+      rentais.setUpdate_at(new Date());
       return this.rentaisRepository.save(rentais);
     }
 
     @Override
-    public void checkAvailabilityNoId(LocalDateTime start_date, LocalDateTime end_date, Integer id) {
-        List<Rentais> check = this.rentaisRepository.checkAvailabilityNoId(start_date,end_date,id);
+    public void checkAvailabilityNoId(LocalDateTime start_date, LocalDateTime end_date, Integer id,Integer car) {
+        List<Rentais> check = this.rentaisRepository.checkAvailabilityNoId(start_date,end_date,id,car);
 
         if(check.size()>0){
             throw new DataIntegrityException("Conflito de Data");
+        }
+
+    }
+
+    @Override
+    public void checkAvailability(CheckAvailability checkAvailability) {
+        var list= this.rentaisRepository.checkAvailability(checkAvailability.getStart_date().atStartOfDay(),(checkAvailability.getStart_date().atStartOfDay().plusDays(checkAvailability.getNumberOfDaysRentals())),checkAvailability.getId());
+        System.out.println(list.size());
+        if(list.size()>0){
+            throw new DataIntegrityException("Conflito de Datas.");
         }
 
     }

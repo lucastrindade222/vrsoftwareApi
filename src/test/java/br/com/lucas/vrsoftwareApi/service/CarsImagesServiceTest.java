@@ -80,6 +80,18 @@ public class CarsImagesServiceTest extends AplicationConfingTest {
         }
 
     }
+    @Test
+    public void upDataTest(){
+
+        try {
+            FileInputStream file = new FileInputStream("img/Hobbit.jpg");
+            this.carsImagesService.save(15,file.readAllBytes());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     @Test
     public  void deliteTest(){
@@ -100,13 +112,21 @@ public class CarsImagesServiceTest extends AplicationConfingTest {
 
     @BeforeEach
     public void setup() {
-        var carsImages = new CarsImages();
+        var cra1 = new Cras();
+        var cra2 = new Cras();
+         cra2.setId(15);
+        Mockito.when( this.crasRepository.findById(10)).thenReturn(Optional.of(cra1));
+        Mockito.when( this.crasRepository.findById(15)).thenReturn(Optional.of(cra2));
+        var carsImages1 = new CarsImages();
+        var carsImages2 = new CarsImages();
 
-        Mockito.when( this.carsImagesRepository.findById(12)).thenReturn(Optional.of(carsImages));
+        carsImages2.setCar(cra2);
+        Mockito.when( this.carsImagesRepository.findById(12)).thenReturn(Optional.of(carsImages1));
+        Mockito.when( this.carsImagesRepository.findById(88)).thenReturn(Optional.of(carsImages2));
         Mockito.when( this.carsImagesRepository.findById(13)).thenReturn(Optional.empty());
 
-        var cra = new Cras();
 
-        Mockito.when( this.crasRepository.findById(10)).thenReturn(Optional.of(cra));
+
+
     }
 }

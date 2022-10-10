@@ -1,6 +1,7 @@
 package br.com.lucas.vrsoftwareApi.service.implemete;
 
 
+import br.com.lucas.vrsoftwareApi.dto.CostumersUpDate;
 import br.com.lucas.vrsoftwareApi.model.Costumers;
 import br.com.lucas.vrsoftwareApi.repository.CostumersRepository;
 import br.com.lucas.vrsoftwareApi.service.CostumersService;
@@ -50,6 +51,36 @@ public class CostumersServiceImplemete implements CostumersService {
         costumers.setCreated_at(new Date());
         return this.costumersRepository.save(costumers);
     }
+
+    @Override
+    public Costumers upData(CostumersUpDate costumersUpDate) {
+
+        var costumersDB = this.find(costumersUpDate.getId());
+        this.from(costumersDB,costumersUpDate);
+        return this.costumersRepository.save(costumersDB);
+    }
+
+    @Override
+    public void from(Costumers costumersDB, CostumersUpDate costumersUpDate) {
+
+        if(costumersUpDate.getName() != null ){
+            costumersDB.setName(costumersUpDate.getName());
+        }
+        if(costumersUpDate.getEmail() != null ){
+            costumersDB.setEmail(costumersUpDate.getEmail());
+        }
+        if(costumersUpDate.getAdress() != null ){
+            costumersDB.setAdress(costumersUpDate.getAdress());
+        }
+        if(costumersUpDate.getPhone_number() != null ){
+            costumersDB.setPhone_number(costumersUpDate.getPhone_number());
+        }
+        if(costumersUpDate.getBirth_date() != null){
+            costumersDB.setBirth_date(costumersUpDate.getBirth_date());
+        }
+
+    }
+
 
     @Override
     public void delete(Integer id) {
